@@ -2,12 +2,15 @@ import json
 
 
 def load_data(filepath):
-    pass
+    with open(filepath, 'rb') as file:
+        data = json.loads(file.read())
+    return data
 
 
-def pretty_print_json(data):
-    pass
+def pretty_print_json(user_data):
+    return json.dumps(user_data, sort_keys=True, indent=4)
 
 
 if __name__ == '__main__':
-    pass
+    user_data_obj = load_data('data.json')
+    print(pretty_print_json(user_data_obj))
