@@ -3,8 +3,8 @@ import json
 
 def load_data(filepath):
     with open(filepath, 'rb') as file:
-        data = json.loads(file.read())
-    return data
+        data_json = json.loads(file.read())
+    return data_json
 
 
 def pretty_print_json(user_data):
