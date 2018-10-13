@@ -11,13 +11,13 @@ for example:
 
 ```
 
-Run **pprint_json.py** <filename>
+Run **pprint_json.py** 
 
 Example of script launch on Linux, Python 3.5:
 
 ```bash
 
-$ python pprint_json.py data.json
+$ python pprint_json.py <filename>
 
 [
     {
