@@ -4,20 +4,17 @@ import sys
 
 
 def load_data(filepath):
-    if os.path.exists(filepath):
-        with open(filepath, 'rb') as file:
-            try:
-                data_list = json.loads(file.read())
-                return data_list
-            except ValueError:
-                return "json data does not exists or incorrect"
-    else:
-        return None
+    with open(filepath, 'rb') as file:
+        try:
+            decoded_json = json.loads(file.read())
+            return decoded_json
+        except ValueError:
+            pass
 
 
-def pretty_print_json(unformatted_json):
+def pretty_print_json(decoded_json):
     return json.dumps(
-        unformatted_json,
+        decoded_json,
         sort_keys=True,
         indent=4,
         ensure_ascii=False,
@@ -25,5 +22,8 @@ def pretty_print_json(unformatted_json):
 
 
 if __name__ == '__main__':
-    user_unformatted_data_list = load_data(sys.argv[1])
-    print(pretty_print_json(user_unformatted_data_list))
+    if len(sys.argv) > 1:
+        filepath = sys.argv[1]
+        if os.path.exists(filepath):
+            user_decoded_json = load_data(filepath)
+            print(pretty_print_json(user_decoded_json))
