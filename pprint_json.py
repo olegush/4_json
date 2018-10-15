@@ -3,34 +3,30 @@ import os.path
 import sys
 
 
-def load_data(filepath, error):
+def load_data(filepath):
     with open(filepath, 'rb') as file:
-        try:
-            return file.read()
-        except ValueError:
-            print(error)
+        return json.loads(file.read())
 
 
-def pretty_print_json(data_to_decode, error):
-    try:
-        decoded_json = json.loads(data_to_decode)
-        return json.dumps(
-            decoded_json,
-            sort_keys=True,
-            indent=4,
-            ensure_ascii=False,
-        )
-    except ValueError:
-        print(error)
+def pretty_print_json(decoded_json):
+    return json.dumps(
+        decoded_json,
+        sort_keys=True,
+        indent=4,
+        ensure_ascii=False,
+    )
 
 
 if __name__ == '__main__':
-    if len(sys.argv) == 2:
-        user_filepath = sys.argv[1]
-        if os.path.exists(user_filepath):
-            user_read_data = load_data(user_filepath, 'file does not reading')
-            print(pretty_print_json(user_read_data, 'need json format'))
-        else:
-            print('need correct file path')
+    if len(sys.argv) < 2:
+        exit('need filename')
     else:
-        print('need filename')
+        user_filepath = sys.argv[1]
+        if not os.path.exists(user_filepath):
+            exit('need correct file path')
+        else:
+            loaded_json = load_data(user_filepath)
+            if not loaded_json:
+                exit('can not load the json')
+            else:
+                print(pretty_print_json(loaded_json))
